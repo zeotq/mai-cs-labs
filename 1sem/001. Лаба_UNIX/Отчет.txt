@@ -1,0 +1,18 @@
+Ссылка на архив: https://faq8.ru/file.php/download/2/272/jstu4-2.3.zip
+
+Вывести все строки между <body> и <\body> из .html файлов
+
+zeotq@DESKTOP-OJSJFU7:/mnt/c/Users/Mi/Desktop/MAI_labs$ mkdir Лаба_UNIX
+zeotq@DESKTOP-OJSJFU7:/mnt/c/Users/Mi/Desktop/MAI_labs$ cd Лаба_UNIX
+zeotq@DESKTOP-OJSJFU7:/mnt/c/Users/Mi/Desktop/MAI_labs/Лаба_UNIX$ wget <link>
+
+zeotq@DESKTOP-OJSJFU7:/mnt/c/Users/Mi/Desktop/MAI_labs/Лаба_UNIX$ sudo apt install zip
+zeotq@DESKTOP-OJSJFU7:/mnt/c/Users/Mi/Desktop/MAI_labs/Лаба_UNIX$ unzip jstu4-2.3.zip
+
+zeotq@DESKTOP-OJSJFU7:/mnt/c/Users/Mi/Desktop/MAI_labs/Лаба_UNIX$ cd jstu4-2.3/
+
+find . -name "*.html" -exec grep -A 1000 '<body>' {} \; | grep -B 1000 '</body>'
+ИЛИ 
+find . -name "*.html" -exec awk '/<body>/,/<\/body>/' {} \;
+
+mkdir -p logs_123 && find /var/log -name "*.log" -exec sudo cp {} logs_123/ \;; tar -cvf logs_123.tar logs_123; cat ./logs_123/*

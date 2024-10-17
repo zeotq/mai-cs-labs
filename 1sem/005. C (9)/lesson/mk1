@@ -1,0 +1,13 @@
+all: clear build run
+
+delete:
+	rm -f main.out
+
+build: delete
+	gcc -std=c11 main.c -o main.out
+	
+run:
+	./main.out
+	
+clear:
+	clear
