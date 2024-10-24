@@ -52,7 +52,10 @@ point (*points())[51] {
     static point shoots_log[51];
 
     while (k < max_k) {
-        shoots_log[k].index = k; shoots_log[k].x = i; shoots_log[k].y = j;  shoots_log[k].l = l;
+        shoots_log[k].index = k;
+        shoots_log[k].x = i;
+        shoots_log[k].y = j; 
+        shoots_log[k].l = l;
         shoots_log[k].isGood = isPointInArea(i, j);
 
         if (k == max_k) {
