@@ -127,7 +127,7 @@ LRESULT CALLBACK WindowProc(HWND hwnd, UINT uMsg, WPARAM wParam, LPARAM lParam) 
                 Ellipse(hdc, x-1, y-1, x+1, y+1);  // Рисуем маленький круг
                 // Рисуем путь
                 if (i != 0) {
-                    SetDCPenColor(hdc, RGB(100, color, 100));
+                    SetDCPenColor(hdc, RGB(0, color, 255 - color));
                     MoveToEx(hdc, old_x, old_y, NULL);
                     LineTo(hdc, x, y);
                 }
