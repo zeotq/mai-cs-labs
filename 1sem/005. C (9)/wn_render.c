@@ -20,28 +20,28 @@ int isPointInArea(double i, double j) {
 }
 
 double _min_(double a, double b) {
-    if(a > b){
+    if(a > b) {
         return b;
     }
     return a;
 }
 
 double _max_(double a, double b) {
-    if(a > b){
+    if(a > b) {
         return a;
     }
     return b;
 }
 
 int mod(int a, int b) {
-    if(a >= 0){
+    if(a >= 0) {
         return a % b;
     }
     return a % b + b;
 }
 
 int sign(double a) {
-    if(a >= 0){
+    if(a >= 0) {
         return 1;
     }
     return -1;
