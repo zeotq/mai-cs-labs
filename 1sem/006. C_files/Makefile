@@ -1,5 +1,5 @@
 # Название исполняемого файла по умолчанию
-TARGET = low_letter_words
+TARGET = short_words_max
 
 # Компилятор и флаги по умолчанию
 CC = gcc
