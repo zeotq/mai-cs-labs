@@ -8,7 +8,7 @@ int is_lowercase_char(char ch) {
 
 int is_uppercase_char(char ch) {
     // Проверка на заглавные буквы английского и русского алфавитов
-    return ((ch >= 'A' && ch <= 'Z') || (ch >= (char)192 && ch <= (char)223)); // А вот к типу char я привожу для совместимости с разными компиляторами
+    return ((ch >= 'A' && ch <= 'Z') || (ch >= (char)192 && ch <= (char)223));  // (char) - для разных компиляторов
 }
 
 int main(int argc, char * argv[]) {
@@ -46,39 +46,31 @@ int main(int argc, char * argv[]) {
     int inWord = 0;
     int wordLen = 0;
     int maxWordLen = 4;
+    int isFileFineshed = feof(file);
     scanf("%d", &maxWordLen);
 
     char c = 0;
-    while (!feof(file)) { // Пока не достигнут конец файла
-        c = fgetc(file); // Читаем символ
-        if(!inWord && (is_lowercase_char(c) || is_uppercase_char(c))) { // Если inWord == False и прочитали букву
-            inWord = 1;
-            wordLen = 1;
-        } else if(inWord && (is_lowercase_char(c) || is_uppercase_char(c))) { // Если inWord == True и прочитали букву
-            ++wordLen;
-        } 
+    while (!isFileFineshed) {  // Пока не достигнут конец файла
+        c = fgetc(file);  // Читаем символ
+        isFileFineshed = feof(file);
 
-        if((!is_lowercase_char(c) && !is_uppercase_char(c)) || feof(file)) {
-            if(wordLen && wordLen <= maxWordLen) { // Если длина слова не 0 и меньше максимальной длины
-                ++counter;
-                for (int i = 0; i < i_tempword; ++i) {
-                    fputc(tempword[i], outFile);
-                }
-                fputc(' ', outFile);
-                printf("\e[4;32m");
-            } 
-            for (int i = 0; i < i_tempword; ++i) {
-                printf("%c", tempword[i]);
+        // Проверка символа
+        if((is_lowercase_char(c) || is_uppercase_char(c)) && !isFileFineshed) {
+            if(inWord) {
+                ++wordLen;
+            } else {
+                inWord = 1;
+                wordLen = 1;
             }
-            i_tempword = 0;
+        } else {
             inWord = 0;
-            wordLen = 0;
         }
 
-        if(inWord) {
+        if(inWord) { // Если находимся в слове, добавляем символ в память 
             tempword[i_tempword] = c;
             ++i_tempword;
-            if (i_tempword >= allocated) {
+            // Выделяем в два раза больше памяти, если закончилось место
+            if (i_tempword >= allocated) { 
                 allocated *= 2;
                 char *tempmem = realloc(tempword, allocated * sizeof(char));
                 if (tempmem == NULL) {  // Проверка на успешное выделение
@@ -88,8 +80,32 @@ int main(int argc, char * argv[]) {
                 }
                 tempword = tempmem;
             }
-        } else if (!feof(file)) {
-            printf("\e[0;0m%c", c);
+        }
+
+        // Слово закончилось
+        if(wordLen && !inWord) {
+            if(wordLen <= maxWordLen) {  // Если длина слова не 0 и меньше максимальной длины
+                ++counter;
+                for (int i = 0; i < i_tempword; ++i) { // Записываем слово в выходной файл
+                    fputc(tempword[i], outFile);
+                }
+                fputc(' ', outFile);
+                printf("\e[4;32m");
+            }
+
+            for (int i = 0; i < i_tempword; ++i) { // Выводим слово в консоль
+                printf("%c", tempword[i]);
+            }
+
+            printf(" {%d}", wordLen);
+            printf("\e[0;0m");
+            printf("%c", c);
+            i_tempword = 0;
+            inWord = 0;
+            wordLen = 0;
+            
+        } else if(!inWord && !isFileFineshed){
+            printf("%c", c);
         }
     }
 
