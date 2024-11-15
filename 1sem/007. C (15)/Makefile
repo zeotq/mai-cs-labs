@@ -1,14 +1,10 @@
 # Название исполняемого файла по умолчанию
-TARGET = low_letter_words_max_ru
+TARGET = main
 
 # Компилятор и флаги по умолчанию
 CC = gcc
 CFLAGS = -std=c11
-INCLUDES = 
-
-IN_F = sample_input.txt
-OUT_F = sample_result.txt
-ARGW = $(IN_F) $(OUT_F)
+INCLUDES = -lm
 
 # Правило по умолчанию (компиляция и запуск программы)
 all: $(TARGET)

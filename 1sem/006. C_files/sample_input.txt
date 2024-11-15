@@ -1,1 +1,3 @@
-Test! Hello world!!! Did I kill Somebody?... Maybe yes, maybe no
+Test! Hello world!!! Did I write Somebody?... Maybe yes, maybe no
+Тест! Привет мир!!! Пока мир, доброе утро.
+Да нет да Нет нет
