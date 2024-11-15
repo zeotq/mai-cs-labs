@@ -37,25 +37,27 @@ int main(int argc, char * argv[]) {
     size_t counter = 0;
     int inWord = 0;
     int wordLen = 0;
-    int maxWordLen = 4;
+    int maxWordLen = 3;
 
     char c = 0;
     while (!feof(file)) { // Пока не достигнут конец файла
         c = fgetc(file); // Читаем символ
-        if(!inWord && (is_lowercase_char(c) || is_uppercase_char(c))) { // Если inWord == False и прочитали букву
-            inWord = 1;
-            wordLen = 1;
-        } else if(inWord && (is_lowercase_char(c) || is_uppercase_char(c))) { // Если inWord == True и прочитали букву
-            ++wordLen;
-        /*
-        Если символ не является заглавной или строчной буквой 
-        или файл закончился
-        */
-        } else if((!is_lowercase_char(c) && !is_uppercase_char(c)) || feof(file)) {
-            if(wordLen && wordLen <= maxWordLen) { // Если длина слова не 0 и меньше максимальной длины
-                ++counter;
-            } 
+
+        if((is_lowercase_char(c) || is_uppercase_char(c)) && !feof(file)) {
+            if(inWord) {
+                ++wordLen;
+            } else {
+                inWord = 1;
+                wordLen = 1;
+            }
+        }
+
+        if(!(is_lowercase_char(c) || is_uppercase_char(c)) || feof(file)){
             inWord = 0;
+        }
+
+        if(!inWord && wordLen && wordLen <= maxWordLen) { // Если длина слова не 0 и меньше максимальной длины
+            ++counter;
             wordLen = 0;
         }
     }
