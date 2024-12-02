@@ -110,7 +110,6 @@ void Matrix_diagonales_replace(Matrix * matrix) {
     T temp = * first_element;
     *first_element = *second_elemet;
     *second_elemet = temp;
-    printf("%u\n");  
   }
 }
 

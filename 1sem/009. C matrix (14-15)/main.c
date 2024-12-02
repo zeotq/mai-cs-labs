@@ -31,7 +31,6 @@ void printWithTargetMatrix(Matrix *matrix, uint n, uint m) {
     }
     printf("\n");
   }
-  delay_ms(50);
 }
 
 void printLine(int *line, uint len_line) {
@@ -59,6 +58,8 @@ void linearizeMatrix(Matrix *matrix) {
         cur_el = *Matrix_at(matrix, j, delta + j);
         line[ind] = cur_el;
         ++ind;
+        printLine(line, len_line);
+        delay_ms(50);
       }
     }
     for(int j = (matrix->getN(matrix) - delta - 1); j > -1; --j) {
@@ -66,9 +67,10 @@ void linearizeMatrix(Matrix *matrix) {
         cur_el = *Matrix_at(matrix, delta + j, j);
         line[ind] = cur_el;
         ++ind;
+        printLine(line, len_line);
+        delay_ms(50);
     }
   }
-  printLine(line, len_line);
 }
 
 void outputFormatMatrix(uint n, uint m) {

@@ -24,5 +24,6 @@ Matrix * Matrix_mult(Matrix * m1, Matrix * m2);
 Matrix * Matrix_copy(Matrix * original);
 void Matrix_fill_random(Matrix * matrix);
 void Matrix_fill_from_console(Matrix * matrix);
+void Matrix_cyclic_shift(Matrix * matrix);
 
 #endif

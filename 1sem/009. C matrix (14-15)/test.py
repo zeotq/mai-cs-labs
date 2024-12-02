@@ -45,6 +45,11 @@ class Matrix:
                 self.matrix[delta + i][i] = el_num
                 el_num += 1
 
+    def cyclic_shift(self):
+        for vert in range(self.n):
+            if vert == 0 or vert == (self.n - 1):
+                print(vert)
+
 
 def fill_function(i, j, m, n):
     return (i * m + (j + 1))
@@ -53,9 +58,9 @@ def fill_function(i, j, m, n):
 def main():
     m = int(input("Input rows count: "))
     n = int(input("Input columns count: "))
-    mat = Matrix(m, n)
-    mat.diagonal_fill()
+    mat = Matrix(m, n, fill_function=fill_function)
     print(*mat.matrix, sep="\n")
+    mat.cyclic_shift()
 
 
 if __name__ == "__main__":
