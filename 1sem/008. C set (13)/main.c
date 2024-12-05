@@ -76,7 +76,7 @@ int main(int argc, char * argv[]) {
     printf("Windows\n");
   #endif
 
-  assert(("Error: 1 input file name not specified", argc > 1));
+  assert(("Error 1: input file name not specified", argc > 1));
 
   const char * inputFileName = argv[1];
   FILE * file = fopen(inputFileName, "r");

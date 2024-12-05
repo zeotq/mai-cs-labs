@@ -108,13 +108,19 @@ int main() {
 
   outputFormatMatrix(n, m);
 
-  Matrix * copy = Matrix_constructor(n, m, &base);
-  Matrix_fill_random(copy);
+  Matrix * matrix = Matrix_constructor(n, m, &base);
+  Matrix_fill_random(matrix);
+  linearizeMatrix(matrix);
 
-  linearizeMatrix(copy);
-  Matrix_diagonales_replace(copy);
+  printf("\nMatrix after diagonales replace:\n");
+  Matrix_diagonales_replace(matrix);
+  printMatrix(matrix);
+
+  printf("\nMatrix with left cyclic shift:\n");
+  Matrix * copy = Matrix_with_left_cyclic_shift(matrix);
   printMatrix(copy);
 
+  Matrix_destructor(&matrix);
   Matrix_destructor(&copy);
   return 0;
 }

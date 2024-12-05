@@ -46,9 +46,22 @@ class Matrix:
                 el_num += 1
 
     def cyclic_shift(self):
-        for vert in range(self.n):
-            if vert == 0 or vert == (self.n - 1):
-                print(vert)
+        new_matrix = Matrix(self.n, self.m)
+        for step in range(min(self.n, self.m)):
+            for line in range(step, self.n - step, 1):
+                for column in range(step, self.m - step, 1):
+                    if line == step and column != (self.m - step - 1):
+                        new_matrix.matrix[line][column] = self.matrix[line][column + 1]
+                    elif line != (self.n - step - 1) and column == (self.m - step - 1):
+                        new_matrix.matrix[line][column] = self.matrix[line + 1][column]
+                    elif line == (self.n - step - 1) and column != step:
+                        new_matrix.matrix[line][column] = self.matrix[line][column - 1]
+                    elif line != step and column == step:
+                        new_matrix.matrix[line][column] = self.matrix[line - 1][column]
+                    else:
+                        new_matrix.matrix[line][column] = self.matrix[line][column]
+
+        self.matrix = new_matrix.matrix
 
 
 def fill_function(i, j, m, n):
@@ -56,11 +69,12 @@ def fill_function(i, j, m, n):
 
 
 def main():
-    m = int(input("Input rows count: "))
-    n = int(input("Input columns count: "))
+    m = 5  # int(input("Input rows count: "))
+    n = 5  # int(input("Input columns count: "))
     mat = Matrix(m, n, fill_function=fill_function)
-    print(*mat.matrix, sep="\n")
+    print(*mat.matrix, sep="\n", end="\n\n")
     mat.cyclic_shift()
+    print(*mat.matrix, sep="\n")
 
 
 if __name__ == "__main__":

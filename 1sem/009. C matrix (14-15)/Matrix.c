@@ -113,6 +113,34 @@ void Matrix_diagonales_replace(Matrix * matrix) {
   }
 }
 
-void Matrix_cyclic_shift(Matrix * matrix) {
-  
+Matrix * Matrix_with_left_cyclic_shift(Matrix * matrix) {
+  Matrix * copy = Matrix_copy(matrix);
+  uint lines_count = matrix->getN(matrix);
+  uint columns_count = matrix->getM(matrix); 
+  uint iters;
+  uint line;
+  uint column;
+
+  if (lines_count > columns_count) {
+    iters = columns_count;
+  } else {
+    iters = lines_count;
+  }
+
+  for (uint step = 0; step < iters; ++step){
+    for (line = step; line < (lines_count - step); ++line){
+      for (column = step; column < (columns_count - step); ++column){
+        if (line == step && column != (columns_count - step - 1)) {
+          *Matrix_at(copy, line, column) = *Matrix_at(matrix, line, column + 1);
+        } else if (line != (lines_count - step - 1) && column == (columns_count - step - 1)) {
+          *Matrix_at(copy, line, column) = *Matrix_at(matrix, line + 1, column);
+        } else if (line == (lines_count - step - 1) && column != step) {
+          *Matrix_at(copy, line, column) = *Matrix_at(matrix, line, column - 1);
+        } else if (line != step && column == step) {
+          *Matrix_at(copy, line, column) = *Matrix_at(matrix, line - 1, column);
+        }
+      }
+    }
+  }
+  return copy;
 }
