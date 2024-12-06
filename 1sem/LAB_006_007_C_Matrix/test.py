@@ -64,16 +64,38 @@ class Matrix:
         self.matrix = new_matrix.matrix
 
 
+    def cyclic_shift_v2(self):
+        new_matrix = Matrix(self.m, self.n)
+        for step in range(min(self.n, self.m) // 2):
+            for column in range(step, self.n - 1 - step):
+                new_matrix.matrix[step][column] = self.matrix[step][column + 1]
+                new_matrix.matrix[self.m - 1 - step][self.n - 1 - column] = self.matrix[self.m - 1 - step][self.n - 1 - column - 1]
+            for line in range(step, self.m - 1 - step):
+                new_matrix.matrix[line + 1][step] = self.matrix[line][step]
+                new_matrix.matrix[line][self.n - 1 - step] = self.matrix[line + 1][self.n - 1 - step]
+                
+        if self.m > self.n and self.n % 2 == 1:
+            for line in range(self.n // 2, self.m - self.n // 2):
+                new_matrix.matrix[line][self.n // 2] = self.matrix[line][self.n // 2]
+        elif self.m < self.n and self.m % 2 == 1:
+            for column in range(self.m // 2, self.n - self.m // 2):
+                new_matrix.matrix[self.m // 2][column] = self.matrix[self.m // 2][column]
+        elif self.m == self.n and self.m % 2 == 1:
+            new_matrix.matrix[self.m // 2][self.n // 2] = self.matrix[self.m // 2][self.n // 2]
+
+        self.matrix = new_matrix.matrix
+
+
 def fill_function(i, j, m, n):
     return (i * m + (j + 1))
 
 
 def main():
-    m = 5  # int(input("Input rows count: "))
-    n = 5  # int(input("Input columns count: "))
+    m = 3  # int(input("Input rows count: "))
+    n = 10  # int(input("Input columns count: "))
     mat = Matrix(m, n, fill_function=fill_function)
     print(*mat.matrix, sep="\n", end="\n\n")
-    mat.cyclic_shift()
+    mat.cyclic_shift_v2()
     print(*mat.matrix, sep="\n")
 
 
