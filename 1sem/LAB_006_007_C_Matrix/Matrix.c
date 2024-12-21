@@ -17,6 +17,16 @@ uint getM(Matrix * matrix) {
   return matrix->m;
 }
 
+uint Matrix_min_size(Matrix * matrix) {
+  uint result;
+  if (matrix->getN(matrix) > matrix->getM(matrix)){
+    result = matrix->getM(matrix);
+  } else {
+    result = matrix->getN(matrix);
+  }
+  return result;
+}
+
 Matrix * Matrix_constructor(uint n, uint m, T*baseElement) {
   Matrix * matrix = malloc(sizeof(Matrix));
   matrix->n = n;
@@ -142,5 +152,41 @@ Matrix * Matrix_with_left_cyclic_shift(Matrix * matrix) {
       }
     }
   }
+  return copy;
+}
+
+Matrix * Matrix_with_left_cyclic_shift_v2(Matrix * matrix) {
+  uint iters = Matrix_min_size(matrix) / 2;
+  uint lines_count = matrix->getN(matrix);
+  uint columns_count = matrix->getM(matrix); 
+  T base_el = 0;
+  Matrix * copy = Matrix_constructor(lines_count, columns_count, &base_el);
+  uint line;
+  uint column;
+
+
+  for (uint step = 0; step < iters; ++step){
+    for (column = step; column < columns_count - 1 - step; ++column){
+      *Matrix_at(copy, step, column) = *Matrix_at(matrix, step, column + 1);
+      *Matrix_at(copy, lines_count - 1 - step, columns_count - 1 - column) = *Matrix_at(matrix, lines_count - 1 - step, columns_count - 1 - column - 1);
+    }
+    for (line = step; line < lines_count - 1 - step; ++line){
+      *Matrix_at(copy, line + 1, step) = *Matrix_at(matrix, line, step);
+      *Matrix_at(copy, line, columns_count - 1 - step) = *Matrix_at(matrix, line + 1, columns_count - 1 - step);
+    }
+  }
+
+  if ((lines_count > columns_count) && (columns_count % 2)){
+    for (line = columns_count / 2; line < lines_count - columns_count / 2; ++line){
+      *Matrix_at(copy, line, columns_count / 2) = *Matrix_at(matrix, line, columns_count / 2);
+    }
+  } else if ((lines_count < columns_count) && (lines_count % 2)){
+    for (column = lines_count / 2; column < columns_count - lines_count / 2; ++column){
+      *Matrix_at(copy, lines_count / 2, column) = *Matrix_at(matrix, lines_count / 2, column);
+    }
+  } else if ((lines_count == columns_count) && (lines_count % 2)){
+    *Matrix_at(copy, lines_count / 2, columns_count / 2) = *Matrix_at(matrix, lines_count / 2, columns_count / 2);
+  }
+
   return copy;
 }

@@ -19,11 +19,13 @@ void Matrix_destructor(Matrix ** matrix);
 T * Matrix_at(Matrix * matrix, uint i, uint j);
 void Matrix_transpose(Matrix * matrix);
 void Matrix_diagonales_replace(Matrix * matrix);
+uint Matrix_min_size(Matrix * matrix);
 
 Matrix * Matrix_mult(Matrix * m1, Matrix * m2);
 Matrix * Matrix_copy(Matrix * original);
 void Matrix_fill_random(Matrix * matrix);
 void Matrix_fill_from_console(Matrix * matrix);
 Matrix * Matrix_with_left_cyclic_shift(Matrix * matrix);
+Matrix * Matrix_with_left_cyclic_shift_v2(Matrix * matrix);
 
 #endif
